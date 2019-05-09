@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--
+        http://www.mybatis.org/mybatis-3/zh/getting-started.html
+        https://www.cnblogs.com/wvae/p/9607684.html
+        https://www.cnblogs.com/hellowhy/p/9664908.html
+        https://www.cnblogs.com/wp5719/p/5645184.html
+        https://www.cnblogs.com/alexanderthegreat/p/7583529.html
+    -->
+
+    <properties resource="conf/config.properties"/>
+
+    <typeAliases>
+        <!--方式一：指定具体的类&对应的别名-->
+        <typeAlias alias="Category" type="com.finstone.bean.Category" />
+        <!--方式二：指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean-->
+        <!--<package name="com.finstone.bean"/>-->
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--SQL映射器-->
+    <mappers>
+        <!--方式一：指定映射文件所在package-->
+        <!--<package name="com.finstone.dao"></package>-->
+        <!--f方式二：指定映射文件路径 + 名称-->
+        <mapper resource="com/finstone/dao/CategoryMapper.xml"/>
+    </mappers>
+
+</configuration>
