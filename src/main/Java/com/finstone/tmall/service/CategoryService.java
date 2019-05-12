@@ -18,4 +18,11 @@ public interface CategoryService {
      * @return
      */
     List<Category> list(Page page);
+
+    /**
+     * 添加一条记录
+     * @param category
+     */
+    void add(Category category);
+
 }

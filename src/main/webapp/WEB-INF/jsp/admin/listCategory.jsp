@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" import="java.util.*"%>
+<!--告诉浏览器提交数据的时候，使用UTF-8编码-->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/admin/adminHeader.jsp"%>
@@ -30,13 +31,13 @@
         <table class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
             <tr class="success">
-                <th>ID</th>
-                <th>图片</th>
-                <th>分类名称</th>
-                <th>属性管理</th>
-                <th>产品管理</th>
-                <th>编辑</th>
-                <th>删除</th>
+                <th width="5%">ID</th>
+                <th width="42%">图片</th>
+                <th width="8%">分类名称</th>
+                <th width="8%">属性管理</th>
+                <th width="8%">产品管理</th>
+                <th width="8%">编辑</th>
+                <th width="5%">删除</th>
             </tr>
             </thead>
             <tbody>

@@ -10,4 +10,6 @@ public interface CategoryMapper {
 
     List<Category> list(Page page);
 
+    void add(Category category);
+
 }

@@ -14,4 +14,9 @@
             limit #{start},#{count}
         </if>
     </select>
+
+    <!-- keyProperty 指定哪个属性用作POJO的主键-->
+    <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        insert into category(name) values (#{name});
+    </insert>
 </mapper>
