@@ -19,4 +19,17 @@
     <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
         insert into category(name) values (#{name});
     </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from category where id = #{id};
+    </delete>
+
+    <update id="edit" parameterType="Category">
+        update category set name = #{name} where id = #{id};
+    </update>
+
+    <select id="get" parameterType="int" resultType="Category">
+        select * from category where id = #{id};
+    </select>
+
 </mapper>

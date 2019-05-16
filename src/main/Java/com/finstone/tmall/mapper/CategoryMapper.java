@@ -12,4 +12,9 @@ public interface CategoryMapper {
 
     void add(Category category);
 
+    void delete(int id);
+
+    void edit(Category category);
+
+    Category get(int id);
 }
