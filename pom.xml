@@ -21,8 +21,8 @@
     <mybatis.version>3.1.1</mybatis.version>
     <mybatis.spring.version>1.2.3</mybatis.spring.version>
     <mybatis-generator.version>1.3.5</mybatis-generator.version>
-    <pagehelper.version>5.1.2-beta</pagehelper.version>
-    <jsqlparser.version>1.0</jsqlparser.version>
+    <pagehelper.version>5.1.8</pagehelper.version>
+    <jsqlparser.version>1.2</jsqlparser.version>
     <!-- jsp -->
     <jstl.version>1.2</jstl.version>
     <servlet-api.version>3.1.0</servlet-api.version>
@@ -82,7 +82,7 @@
       <artifactId>mybatis-generator-core</artifactId>
       <version>${mybatis-generator.version}</version>
     </dependency>
-    <!-- jsqlparser -->
+    <!-- jsqlparser: pagehelper分页插件辅助工具 -->
     <dependency>
       <groupId>com.github.jsqlparser</groupId>
       <artifactId>jsqlparser</artifactId>

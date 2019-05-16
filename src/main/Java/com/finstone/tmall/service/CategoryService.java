@@ -10,14 +10,14 @@ public interface CategoryService {
      * 获取记录总数
      * @return
      */
-    int total();
+    //int total();
 
     /**
      * （分页）获取所有记录
-     * @param page
      * @return
      */
-    List<Category> list(Page page);
+    //List<Category> list(Page page);
+    List<Category> list();
 
     /**
      * 添加一条记录

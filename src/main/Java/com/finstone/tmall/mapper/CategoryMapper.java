@@ -6,9 +6,11 @@ import com.finstone.tmall.entity.Page;
 import java.util.List;
 
 public interface CategoryMapper {
-    int total();
+    //int total(); //手工分页
 
-    List<Category> list(Page page);
+    //List<Category> list(Page page); //手工分页
+
+    List<Category> list(); //Mybatis插件分页
 
     void add(Category category);
 

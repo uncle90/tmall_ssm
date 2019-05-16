@@ -42,18 +42,19 @@
         <!-- 当mybatis的xml文件和mapper接口不在相同包下时，需要用mapperLocations属性指定xml文件的路径。
              *是个通配符，代表所有的文件，**代表所有目录下 -->
         <property name="mapperLocations" value="classpath:com/finstone/tmall/mapper/*.xml"/>
-        <!--分页插件，目前先注释，后面重构的时候才会使用
+        <!-- 配置分页插件：mybatis-config.xml和 spring<bean>配置，只能二选一！！ -->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">
                         <value>
+                            <!--https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/en/HowToUse.md#3-pagehelper-parameters-->
+                            helperDialect=mysql
                         </value>
                     </property>
                 </bean>
             </array>
         </property>
-        -->
     </bean>
 
     <!--Mybatis的Mapper文件识别-->

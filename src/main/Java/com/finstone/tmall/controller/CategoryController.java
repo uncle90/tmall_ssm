@@ -5,6 +5,8 @@ import com.finstone.tmall.entity.Page;
 import com.finstone.tmall.service.CategoryService;
 import com.finstone.tmall.util.ImageUtil;
 import com.finstone.tmall.util.UploadImageFile;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +29,12 @@ public class CategoryController {
 
     @RequestMapping("admin_category_list")
     public String list(Model model, Page page){
-        List<Category> cs = categoryService.list(page);
-        int total = categoryService.total();
+        //指定分页参数
+        PageHelper.offsetPage(page.getStart(), page.getCount());//param1起始位置，param2偏移量（每页大小）。
+        //紧跟在PageHelper插件后，获取分页数据，线程安全。https://www.cnblogs.com/ljdblog/p/6725094.html
+        List<Category> cs = categoryService.list();
+        //通过PageInfo获取总数
+        int total = (int) new PageInfo<>(cs).getTotal();
         page.setTotal(total);
         model.addAttribute("cs",cs);
         model.addAttribute("page", page);
