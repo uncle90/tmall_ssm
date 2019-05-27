@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--数据库连接驱动-->
+    <!--<classPathEntry location="E:\Personal\Documents\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />-->
+
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <!--是否在代码中显示注释-->
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!--数据库连接-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tmall_ssm?characterEncoding=UTF-8" userId="root" password="admin">
+        </jdbcConnection>
+
+        <!--java类型处理器-->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--java模型(pojo)创建器-->
+        <javaModelGenerator targetPackage="com.finstone.tmall.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 生成SQL map的XML文件生成器，
+            注意，在Mybatis3之后，我们可以使用mapper.xml文件+Mapper接口（或者不用mapper接口），
+                或者只使用Mapper接口+Annotation，所以，如果 javaClientGenerator配置中配置了需要生成XML的话，这个元素就必须配置
+            targetPackage/targetProject:同javaModelGenerator
+         -->
+        <sqlMapGenerator targetPackage="com.finstone.tmall.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口
+            targetPackage/targetProject:同javaModelGenerator
+            type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下）：
+                1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中），不会生成对应的XML；
+                2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是SQL会生成在XML中；
+                3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
+            注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.finstone.tmall.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--<table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="ID" sqlStatement="DB2" identity="true" />
+            <columnOverride column="DATE_FIELD" property="startDate" />
+            <ignoreColumn column="FRED" />
+            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+        </table>-->
+        <!-- 选择一个table来生成相关文件，可以有一个或多个table，必须要有table元素
+            选择的table会生成以下文件：
+            1，SQL map文件
+            2，生成一个主键类；
+            3，除了BLOB和主键的其他字段的类；
+            4，包含BLOB的类；
+            5，一个用户生成动态查询的条件类（selectByExample, deleteByExample），可选；
+            6，Mapper接口（可选）
+         -->
+        <table tableName="category" domainObjectName="Category" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

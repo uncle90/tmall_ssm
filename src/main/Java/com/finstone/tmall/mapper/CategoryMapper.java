@@ -1,22 +1,21 @@
 package com.finstone.tmall.mapper;
 
 import com.finstone.tmall.entity.Category;
-import com.finstone.tmall.entity.Page;
-
+import com.finstone.tmall.entity.CategoryExample;
 import java.util.List;
 
 public interface CategoryMapper {
-    //int total(); //手工分页
+    int deleteByPrimaryKey(Integer id);
 
-    //List<Category> list(Page page); //手工分页
+    int insert(Category record);
 
-    List<Category> list(); //Mybatis插件分页
+    int insertSelective(Category record);
 
-    void add(Category category);
+    List<Category> selectByExample(CategoryExample example);
 
-    void delete(int id);
+    Category selectByPrimaryKey(Integer id);
 
-    void edit(Category category);
+    int updateByPrimaryKeySelective(Category record);
 
-    Category get(int id);
+    int updateByPrimaryKey(Category record);
 }
