@@ -93,32 +93,4 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <!--&lt;select id="total" resultType="int"&gt;
-        select count(*) from category
-    &lt;/select&gt;-->
-
-    <select id="list" resultType="Category">
-        select * from category order by id desc
-        <!--&lt;if test="start!=null and count!=null"&gt;
-            limit #{start},#{count}
-        &lt;/if&gt;-->
-    </select>
-
-    <!-- keyProperty 指定哪个属性用作POJO的主键-->
-    <insert id="add" keyProperty="id" parameterType="Category" useGeneratedKeys="true">
-        insert into category(name) values (#{name});
-    </insert>
-
-    <delete id="delete" parameterType="int">
-        delete from category where id = #{id};
-    </delete>
-
-    <update id="edit" parameterType="Category">
-        update category set name = #{name} where id = #{id};
-    </update>
-
-    <select id="get" parameterType="int" resultType="Category">
-        select * from category where id = #{id};
-    </select>
-
 </mapper>
