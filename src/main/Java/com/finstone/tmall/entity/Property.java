@@ -7,7 +7,8 @@ public class Property {
 
     private String name;
 
-    private Category category; //手动添加. 在属性查询页、添加页、编辑页提供关联信息，包括category.id、category.name等。
+    /*非数据库字段：手动添加. 在属性查询页、添加页、编辑页提供关联信息，包括category.id、category.name等。*/
+    private Category category;
 
     public Integer getId() {
         return id;

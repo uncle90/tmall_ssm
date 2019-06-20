@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 注意：
- * 以下方法全部针对某个特定的产品 cid
+ * 以下方法全部针对某个特定的分类 cid
  */
 @Controller
 @RequestMapping("")
@@ -29,7 +29,7 @@ public class PropertyController {
     CategoryService categoryService;
 
     /**
-     * 分页查询指定产品的所有属性
+     * 分页查询指定分类的所有属性
      * @param model
      * @param page
      * @param cid
@@ -54,7 +54,7 @@ public class PropertyController {
     }
 
     /**
-     * 给指定产品添加一个属性
+     * 给指定分类添加一个属性
      * @param p
      * @return
      */
@@ -82,7 +82,7 @@ public class PropertyController {
     }
 
     /**
-     * 修改指定产品的某个属性
+     * 修改指定分类的某个属性
      * @param p
      * @return
      */
@@ -93,7 +93,7 @@ public class PropertyController {
     }
 
     /**
-     * 删除指定产品的某个属性
+     * 删除指定分类的某个属性
      * @param id 属性编号
      * @return
      */
