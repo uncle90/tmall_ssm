@@ -34,10 +34,10 @@
 				class="table table-striped table-bordered table-hover  table-condensed">
 			<thead>
 			<tr class="success">
-				<th>ID</th>
-				<th>属性名称</th>
-				<th>编辑</th>
-				<th>删除</th>
+				<th width="5%">ID</th>
+				<th width="35%">属性名称</th>
+				<th width="30%">编辑</th>
+				<th width="30%">删除</th>
 			</tr>
 			</thead>
 			<tbody>

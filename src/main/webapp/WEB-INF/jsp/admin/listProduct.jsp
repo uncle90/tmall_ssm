@@ -38,17 +38,17 @@
 				class="table table-striped table-bordered table-hover  table-condensed">
 			<thead>
 			<tr class="success">
-				<th>ID</th>
-				<th>图片</th>
-				<th>产品名称</th>
-				<th>产品小标题</th>
-				<th width="53px">原价格</th>
-				<th width="80px">优惠价格</th>
-				<th width="80px">库存数量</th>
-				<th width="80px">图片管理</th>
-				<th width="80px">设置属性</th>
-				<th width="42px">编辑</th>
-				<th width="42px">删除</th>
+				<th width="5%">ID</th>
+				<th width="5%">图片</th>
+				<th width="20%">产品名称</th>
+				<th width="20%">产品小标题</th>
+				<th width="8%">原价格</th>
+				<th width="8%">优惠价格</th>
+				<th width="8%">库存数量</th>
+				<th width="8%">图片管理</th>
+				<th width="8%">设置属性</th>
+				<th width="5%">编辑</th>
+				<th width="5%">删除</th>
 			</tr>
 			</thead>
 			<tbody>

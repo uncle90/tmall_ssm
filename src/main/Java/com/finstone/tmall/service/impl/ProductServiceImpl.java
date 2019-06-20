@@ -1,8 +1,10 @@
 package com.finstone.tmall.service.impl;
 
+import com.finstone.tmall.entity.Category;
 import com.finstone.tmall.entity.Product;
 import com.finstone.tmall.entity.ProductExample;
 import com.finstone.tmall.mapper.ProductMapper;
+import com.finstone.tmall.service.CategoryService;
 import com.finstone.tmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductMapper productMapper;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public void add(Product product) {
@@ -31,7 +36,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product get(int id) {
-        return productMapper.selectByPrimaryKey(id);
+        Product product = productMapper.selectByPrimaryKey(id);
+        //设置 Category 属性
+        setCategory(product);
+        return product;
     }
 
     /**
@@ -44,6 +52,29 @@ public class ProductServiceImpl implements ProductService {
         ProductExample example = new ProductExample();
         example.createCriteria().andCidEqualTo(cid);
         example.setOrderByClause("id asc");
-        return productMapper.selectByExample(example);
+        List<Product> ps = productMapper.selectByExample(example);
+        //遍历list，设置Category属性
+        setCategory(ps);
+        return ps;
+    }
+
+
+    /**
+     * 给单个Product设置Category属性
+     * @param product
+     */
+    public void setCategory(Product product){
+        int id = product.getCid();
+        Category category = categoryService.get(id);
+        product.setCategory(category);
+    }
+
+    /**
+     * 给集合中的所有Product设置Category属性
+     * @param ps
+     */
+    public void setCategory(List<Product> ps){
+        for(Product p : ps)
+            setCategory(p);
     }
 }

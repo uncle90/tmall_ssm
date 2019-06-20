@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class ProductController {
 
         int total = (int) new PageInfo<>(ps).getTotal();
         page.setTotal(total);
+        //产品分页都是基于当前分类下的分页，所以分页的时候需要传递这个cid
         page.setParam("&cid="+c.getId());
 
         model.addAttribute("ps",ps);
@@ -60,6 +62,7 @@ public class ProductController {
      */
     @RequestMapping("admin_product_add")
     public String add(Model model, Product p){
+        p.setCreateDate(new Date());
         productService.add(p);
         return "redirect:/admin_product_list?cid="+p.getCid();
     }
@@ -73,8 +76,9 @@ public class ProductController {
     @RequestMapping("admin_product_edit")
     public String edit(Model model, int id){
         Product product = productService.get(id);
+        /*//放在了 Service 层
         Category category = categoryService.get(product.getCid());
-        product.setCategory(category);
+        product.setCategory(category);*/
         model.addAttribute("p",product);
         //p.name提供初始值，用于修改
         //p.Category提供地址导航（面包屑）
