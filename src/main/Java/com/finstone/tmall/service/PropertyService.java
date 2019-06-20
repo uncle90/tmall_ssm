@@ -13,6 +13,7 @@ public interface PropertyService {
 
     Property get(int id);
 
+    //按产品类别(Category) cid 查询
     List<Property> list(int cid);
 
 }
