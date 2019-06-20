@@ -7,6 +7,8 @@ public class Page {
 
     int total; //记录总条数
 
+    //href="?start=${page.start-page.count}${page.param}"
+    //分页时，在url中存放除分页信息外的其他数据，如admin_property_list?start=5【&cid=83】
     String param;
 
     public static final int defaultCount = 5; //默认每页显示5条

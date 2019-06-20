@@ -15,6 +15,11 @@ public interface CategoryMapper {
 
     Category selectByPrimaryKey(Integer id);
 
+    /**
+     * 与updateByPrimaryKey不同，只改非null属性对应的字段。
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
