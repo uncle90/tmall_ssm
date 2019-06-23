@@ -59,9 +59,9 @@ public class PropertyController {
      * @return
      */
     @RequestMapping("admin_property_add")
-    public String add(Model model, Property p){
+    public String add(Property p){
         propertyService.add(p);
-        return "redirect:/admin_property_list?cid="+p.getCid();
+        return "redirect:admin_property_list?cid="+p.getCid();
     }
 
     /**
@@ -89,7 +89,7 @@ public class PropertyController {
     @RequestMapping("admin_property_update")
     public String update(Property p){
         propertyService.update(p);
-        return "redirect:/admin_property_list?cid="+p.getCid();
+        return "redirect:admin_property_list?cid="+p.getCid();
     }
 
     /**
@@ -101,7 +101,7 @@ public class PropertyController {
     public String delete(int id){
         Property property = propertyService.get(id);
         propertyService.delete(id);
-        return "redirect:/admin_property_list?cid="+property.getCid();
+        return "redirect:admin_property_list?cid="+property.getCid();
     }
 
 }
