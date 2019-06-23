@@ -61,10 +61,10 @@ public class ProductController {
      * @return
      */
     @RequestMapping("admin_product_add")
-    public String add(Model model, Product p){
+    public String add(Product p){
         p.setCreateDate(new Date());
         productService.add(p);
-        return "redirect:/admin_product_list?cid="+p.getCid();
+        return "redirect:admin_product_list?cid="+p.getCid();
     }
 
     /**
@@ -93,7 +93,7 @@ public class ProductController {
     @RequestMapping("admin_product_update")
     public String update(Product p){
         productService.update(p);
-        return "redirect:/admin_product_list?cid="+p.getCid();
+        return "redirect:admin_product_list?cid="+p.getCid();
     }
 
     /**
@@ -105,7 +105,7 @@ public class ProductController {
     public String delete(int id){
         Product product = productService.get(id);
         productService.delete(id);
-        return "redirect:/admin_product_list?cid="+product.getCid();
+        return "redirect:admin_product_list?cid="+product.getCid();
     }
 
 }
