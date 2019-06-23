@@ -26,7 +26,7 @@ $(function(){
       </a>
     </li>   
  
-    <c:forEach begin="0" end="${page.totalPage-1}" varStatus="status">
+    <c:forEach begin="0" end="${page.totalPage-1>0?page.totalPage-1:0}" varStatus="status">
                 <c:if test="${status.count*page.count-page.start<=20 && status.count*page.count-page.start>=-10}">
     
 	                <li <c:if test="${status.index*page.count==page.start}">class="disabled"</c:if>>
