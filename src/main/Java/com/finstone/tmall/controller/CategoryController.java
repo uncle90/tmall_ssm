@@ -66,7 +66,7 @@ public class CategoryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/admin_category_list";
+        return "redirect:admin_category_list";
     }
 
     /**
@@ -110,7 +110,7 @@ public class CategoryController {
                 e.printStackTrace();
             }
         }
-        return "redirect:/admin_category_list";
+        return "redirect:admin_category_list";
     }
 
     /**
@@ -130,7 +130,7 @@ public class CategoryController {
         if(file.exists()){
             file.delete();
         }
-        return "redirect:/admin_category_list";
+        return "redirect:admin_category_list";
     }
 
 }
