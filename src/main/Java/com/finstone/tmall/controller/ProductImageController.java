@@ -54,7 +54,6 @@ public class ProductImageController {
 
     /**
      * 给指定产品pid添加图片——区分类型：概况图、详情图
-     * @param model
      * @param pi
      * @param session 用于获取当前应用的路径 for 静态资源路径
      * @param uploadImageFile 接收上传的图片
@@ -66,6 +65,7 @@ public class ProductImageController {
         productImageService.add(pi);
 
         //2.保存图片
+        String fileName = pi.getId()+".jpg";
         //创建保存对象（目录）
         String imageFolder;
         String imageFolder_middle = null;
@@ -80,7 +80,7 @@ public class ProductImageController {
             throw new Exception("图片分类错误");
         }
         //创建目录
-        File file = new File(imageFolder, pi.getId()+".jpg");
+        File file = new File(imageFolder, fileName);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
@@ -90,8 +90,8 @@ public class ProductImageController {
             BufferedImage img = ImageUtil.change2jpg(file); //转换格式
             ImageIO.write(img,"jpg", file);   //原大小保存
             if(ProductImageService.type_single.equals(pi.getType())){
-                File file_middle = new File(imageFolder_middle);
-                File file_small  = new File(imageFolder_small);
+                File file_middle = new File(imageFolder_middle, fileName);
+                File file_small  = new File(imageFolder_small, fileName);
                 ImageUtil.resizeImage(file, 56, 56, file_middle);
                 ImageUtil.resizeImage(file, 217, 190, file_small);
             }
@@ -103,25 +103,39 @@ public class ProductImageController {
     }
 
 
+    /**
+     * 删除图片和记录
+     * @param id
+     * @param session
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("admin_productImage_delete")
     public String delete(int id, HttpSession session) throws Exception {
         //1.查询图片类型
         ProductImage pi = productImageService.get(id);
 
-        //2.删除记录
-        productImageService.delete(id);
-
-        //3.删除文件
-        File imageFolder = null;
+        //2.删除文件
+        String fileName = pi.getId()+".jpg";
+        File file;
+        File file_middle = null;
+        File file_small  = null;
         if("type_single".equals(pi.getType())){
-            imageFolder = new File(session.getServletContext().getRealPath("img/productSingle"));
+            file = new File(session.getServletContext().getRealPath("img/productSingle"), fileName);
+            file_middle = new File(session.getServletContext().getRealPath("img/productSingle_middle"), fileName);
+            file_small  = new File(session.getServletContext().getRealPath("img/productSingle_small") , fileName);
+            file.delete();
+            file_middle.delete();
+            file_small.delete();
         }else if("type_detail".equals(pi.getType())){
-            imageFolder = new File(session.getServletContext().getRealPath("img/productDetail"));
+            file = new File(session.getServletContext().getRealPath("img/productDetail"), fileName);
+            file.delete();
         }else{
             throw new Exception("图片类型错误");
         }
-        File file = new File(imageFolder, pi.getId()+".jpg");
-        file.delete();
+
+        //3.删除记录
+        productImageService.delete(id);
 
         //4.重定向
         return "redirect:admin_productImage_list?pid="+pi.getPid();
