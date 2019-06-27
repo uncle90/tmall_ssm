@@ -10,14 +10,14 @@
 
 <script>
     $(function() {
-        $("input.pvValue").keyup(function(){
+        $("input.pvValue").change(function(){
             var value = $(this).val();
-            var page = "admin_propertyValue_update";
+            var url = "admin_propertyValue_update";
             var pvid = $(this).attr("pvid");
             var parentSpan = $(this).parent("span");
             parentSpan.css("border","1px solid yellow");
             $.post(
-                page,
+                url,
                 {"value":value,"id":pvid},
                 function(result){
                     if("success"==result)
