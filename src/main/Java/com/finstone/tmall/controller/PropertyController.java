@@ -3,8 +3,10 @@ package com.finstone.tmall.controller;
 import com.finstone.tmall.entity.Category;
 import com.finstone.tmall.entity.Page;
 import com.finstone.tmall.entity.Property;
+import com.finstone.tmall.entity.PropertyValue;
 import com.finstone.tmall.service.CategoryService;
 import com.finstone.tmall.service.PropertyService;
+import com.finstone.tmall.service.PropertyValueService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class PropertyController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    PropertyValueService propertyValueService;
 
     /**
      * 分页查询指定分类的所有属性
@@ -93,12 +98,18 @@ public class PropertyController {
     }
 
     /**
-     * 删除指定分类的某个属性
-     * @param id 属性编号
+     * 删除指定分类的某个属性，同步删除产品属性（值，外键）
+     * @param id 属性编号 = property.id = PropertyValue.ptid
      * @return
      */
     @RequestMapping("admin_property_delete")
     public String delete(int id){
+        //逐个删除产品属性（值）
+        List<PropertyValue> pvs = propertyValueService.listByPropertyId(id);
+        for(PropertyValue pv: pvs){
+            propertyValueService.delete(pv.getId());
+        }
+        //删除分类属性
         Property property = propertyService.get(id);
         propertyService.delete(id);
         return "redirect:admin_property_list?cid="+property.getCid();

@@ -1,6 +1,5 @@
 package com.finstone.tmall.controller;
 
-import com.finstone.tmall.entity.Category;
 import com.finstone.tmall.entity.Product;
 import com.finstone.tmall.entity.PropertyValue;
 import com.finstone.tmall.service.CategoryService;
@@ -28,7 +27,7 @@ public class PropertyValueController {
 
     /**
      * 产品属性list查看
-     * @param pid = PropertyValue.pid = Product.id,
+     * @param pid = PropertyValue.pid = Product.id
      * @param model
      * @return
      */

@@ -28,6 +28,8 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     /**
      * 按产品所属类别，初始化/刷新每种产品的属性名称。
+     * step1: select * from property a where a.cid = ?;
+     * step2: select * from property a, propertyvalue b where a.id = b.ptid and a.cid = ? and b.pid = ? and b.ptid = ?
      * @param product
      */
     @Override
@@ -79,7 +81,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     /**
      * 查询指定产品的所有属性键值对（属性名，属性值）.
-     * @param pid = PropertyValue.pid = Product.id,
+     * @param pid = PropertyValue.pid = Product.id
      * @return
      */
     @Override
@@ -92,9 +94,17 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
         //属性名
         for(PropertyValue pv: pvs){
-            Property property = propertyService.get(pv.getPtid());
+            Property property = propertyService.get(pv.getPtid()); //Property.id = PropertyValue.ptid
             pv.setProperty(property);
         }
         return pvs;
+    }
+
+    @Override
+    public List<PropertyValue> listByPropertyId(int ptid) {
+        PropertyValueExample example = new PropertyValueExample();
+        example.createCriteria().andPtidEqualTo(ptid);
+        example.setOrderByClause("id asc");
+        return propertyValueMapper.selectByExample(example);
     }
 }
