@@ -44,4 +44,22 @@ public interface CategoryService {
      */
     Category get(int id);
 
+    /**
+     * 给 Category.products 赋值
+     * @param c
+     */
+    void fill(Category c);
+
+    /**
+     * 给 Category.products 赋值
+     * @param cs
+     */
+    void fillProducts(List<Category> cs);
+
+    /**
+     * 给 Category.productsByRow 赋值（对products按行分组，一行最多8个）
+     * @param cs
+     */
+    void fillProductsByRow(List<Category> cs);
+
 }
