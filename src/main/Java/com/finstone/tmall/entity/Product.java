@@ -22,6 +22,9 @@ public class Product {
     /*非数据库字段：手动添加. 在属性查询页、添加页、编辑页提供关联信息，包括category.id、category.name等。*/
     private Category category;
 
+    /*非数据库字段：手动添加. 在首页、产品列表页等显示封面图片*/
+    private ProductImage firstProductImage;
+
     public Integer getId() {
         return id;
     }
@@ -92,5 +95,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public ProductImage getFirstProductImage() {
+        return firstProductImage;
+    }
+
+    public void setFirstProductImage(ProductImage firstProductImage) {
+        this.firstProductImage = firstProductImage;
     }
 }

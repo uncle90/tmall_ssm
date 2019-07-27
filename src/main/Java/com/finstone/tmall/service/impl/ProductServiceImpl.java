@@ -3,8 +3,10 @@ package com.finstone.tmall.service.impl;
 import com.finstone.tmall.entity.Category;
 import com.finstone.tmall.entity.Product;
 import com.finstone.tmall.entity.ProductExample;
+import com.finstone.tmall.entity.ProductImage;
 import com.finstone.tmall.mapper.ProductMapper;
 import com.finstone.tmall.service.CategoryService;
+import com.finstone.tmall.service.ProductImageService;
 import com.finstone.tmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    ProductImageService productImageService;
 
     @Override
     public void add(Product product) {
@@ -53,7 +58,9 @@ public class ProductServiceImpl implements ProductService {
         example.createCriteria().andCidEqualTo(cid);
         example.setOrderByClause("id asc");
         List<Product> ps = productMapper.selectByExample(example);
-        //遍历list，设置Category属性
+        //遍历list，设置封面图片 firstProductImage 属性
+        setFirstProductImage(ps);
+        //遍历list，设置 category 属性
         setCategory(ps);
         return ps;
     }
@@ -76,5 +83,21 @@ public class ProductServiceImpl implements ProductService {
     public void setCategory(List<Product> ps){
         for(Product p : ps)
             setCategory(p);
+    }
+
+    @Override
+    public void setFirstProductImage(Product product) {
+        List<ProductImage> pis = productImageService.list(product.getId(), ProductImageService.type_single);
+        if(null != pis && !pis.isEmpty()){
+            ProductImage pi = pis.get(0);
+            product.setFirstProductImage(pi);
+        }
+    }
+
+    @Override
+    public void setFirstProductImage(List<Product> ps) {
+        for(Product p: ps){
+            this.setFirstProductImage(p);
+        }
     }
 }
