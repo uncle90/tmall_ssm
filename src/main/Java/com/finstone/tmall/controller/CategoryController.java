@@ -27,6 +27,12 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    //后台管理入口
+    @RequestMapping("admin")
+    public String admin(Model model){
+        return "redirect:admin_category_list";
+    }
+
     @RequestMapping("admin_category_list")
     public String list(Model model, Page page){
         //指定分页参数
