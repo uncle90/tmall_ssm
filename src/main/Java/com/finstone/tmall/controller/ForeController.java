@@ -51,8 +51,57 @@ public class ForeController {
         //4. 跳转到首页
         model.addAttribute("cs", cs);
         return "fore/home";
-//        return "admin/editCategory";
     }
+
+    /**
+     * 前往注册页
+     *
+     * ${contextPath}
+     * ${user.name}
+     * ${cartTotalItemNumber}
+     * 搜索框
+     * ${param.keyword}
+     * ${cs}
+     *
+     */
+    @RequestMapping("register")
+    public String register(Model model){
+        List<Category> cs = categoryService.list();
+
+        model.addAttribute("cs", cs);
+        return "fore/register";
+    }
+
+    /**
+     * 注册
+     *
+     * 注册/重置密码input框
+     * name
+     * password
+     * repeatpassword
+     * registerSuccess.jsp
+     */
+    void foreregister(){
+    }
+
+    //foresearch 搜索框
+
+    //forecategory?cid=79
+
+    //foreproduct?pid=87
+
+    //loginPage 登录
+
+    //registerPage 注册
+
+    //forecart 购物车
+
+    //forebought 我的订单
+
+
+
+
+
 
 
 }
