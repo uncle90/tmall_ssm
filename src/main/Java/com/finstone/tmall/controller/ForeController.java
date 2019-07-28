@@ -1,7 +1,9 @@
 package com.finstone.tmall.controller;
 
 import com.finstone.tmall.entity.Category;
+import com.finstone.tmall.entity.User;
 import com.finstone.tmall.service.CategoryService;
+import com.finstone.tmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ public class ForeController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
 
     /**
      * 首页
@@ -53,55 +58,37 @@ public class ForeController {
         return "fore/home";
     }
 
-    /**
-     * 前往注册页
-     *
-     * ${contextPath}
-     * ${user.name}
-     * ${cartTotalItemNumber}
-     * 搜索框
-     * ${param.keyword}
-     * ${cs}
-     *
-     */
-    @RequestMapping("register")
-    public String register(Model model){
-        List<Category> cs = categoryService.list();
+    //登录页
+    @RequestMapping("loginPage")
+    public String loginPage(){
+        return "fore/login";
+    }
 
-        model.addAttribute("cs", cs);
+    //注册页
+    @RequestMapping("registerPage")
+    public String register(){
         return "fore/register";
     }
 
-    /**
-     * 注册
-     *
-     * 注册/重置密码input框
-     * name
-     * password
-     * repeatpassword
-     * registerSuccess.jsp
-     */
-    void foreregister(){
+    //注册
+    @RequestMapping("foreregister")
+    public String foreregister(Model model, User user){
+        //User接收form表单带name的提交
+        if(userService.isExist(user.getName())){
+            model.addAttribute("msg","用户名已经被使用,不能使用");
+            model.addAttribute("user",null); //top.jsp
+            return "fore/register";
+        }
+        //注册
+        userService.add(user);
+        return "redirect:registerSuccess";
     }
 
-    //foresearch 搜索框
-
-    //forecategory?cid=79
-
-    //foreproduct?pid=87
-
-    //loginPage 登录
-
-    //registerPage 注册
-
-    //forecart 购物车
-
-    //forebought 我的订单
-
-
-
-
-
+    //注册成功页
+    @RequestMapping("registerSuccess")
+    public String registerSuccess(){
+        return "fore/registerSuccess";
+    }
 
 
 }

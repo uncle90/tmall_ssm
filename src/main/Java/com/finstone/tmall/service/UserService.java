@@ -15,4 +15,7 @@ public interface UserService {
     User get(int id);
 
     List<User> list();
+
+    //判断用户名是否被占用
+    boolean isExist(String name);
 }
