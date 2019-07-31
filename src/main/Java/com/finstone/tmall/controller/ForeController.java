@@ -121,5 +121,11 @@ public class ForeController {
         return "fore/registerSuccess";
     }
 
+    //退出
+    @RequestMapping("forelogout")
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
+        return "redirect:forehome";
+    }
 
 }
