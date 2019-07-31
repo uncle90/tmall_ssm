@@ -1,6 +1,7 @@
 package com.finstone.tmall.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product {
     private Integer id;
@@ -24,6 +25,18 @@ public class Product {
 
     /*非数据库字段：手动添加. 在首页、产品列表页等显示封面图片*/
     private ProductImage firstProductImage;
+
+    /*非数据库字段：单个产品图片集*/
+    private List<ProductImage> productSingleImages;
+
+    /*非数据库字段：产品详情图片集*/
+    private List<ProductImage> productDetailImages;
+
+    /*非数据库字段：销量*/
+    private int saleCount;
+
+    /*非数据库字段：累计评价*/
+    private int reviewCount;
 
     public Integer getId() {
         return id;
@@ -103,5 +116,37 @@ public class Product {
 
     public void setFirstProductImage(ProductImage firstProductImage) {
         this.firstProductImage = firstProductImage;
+    }
+
+    public List<ProductImage> getProductSingleImages() {
+        return productSingleImages;
+    }
+
+    public void setProductSingleImages(List<ProductImage> productSingleImages) {
+        this.productSingleImages = productSingleImages;
+    }
+
+    public List<ProductImage> getProductDetailImages() {
+        return productDetailImages;
+    }
+
+    public void setProductDetailImages(List<ProductImage> productDetailImages) {
+        this.productDetailImages = productDetailImages;
+    }
+
+    public int getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
     }
 }

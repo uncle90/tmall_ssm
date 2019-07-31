@@ -91,7 +91,7 @@ $(function(){
          
         if(0==name.length||0==password.length){
             $("span.errorMessage").html("请输入账号密码");
-            $("div.loginErrorMessageDiv").show();           
+            $("div.loginErrorMessageDiv").show();
             return false;
         }
          

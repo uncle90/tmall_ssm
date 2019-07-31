@@ -1,8 +1,12 @@
 package com.finstone.tmall.controller;
 
 import com.finstone.tmall.entity.Category;
+import com.finstone.tmall.entity.Product;
+import com.finstone.tmall.entity.ProductImage;
 import com.finstone.tmall.entity.User;
 import com.finstone.tmall.service.CategoryService;
+import com.finstone.tmall.service.ProductImageService;
+import com.finstone.tmall.service.ProductService;
 import com.finstone.tmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,12 @@ public class ForeController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    ProductImageService productImageService;
 
     /**
      * 首页
@@ -127,5 +137,29 @@ public class ForeController {
         session.removeAttribute("user");
         return "redirect:forehome";
     }
+
+    //产品页
+    @RequestMapping("foreproduct")
+    public String product(@RequestParam("pid") int pid, Model model){
+        //分类list
+        List<Category> cs = categoryService.list();
+
+        //产品
+        Product product = productService.get(pid);
+        //单个（类）图片
+        List<ProductImage> pisSingle = productImageService.list(pid, "type_single");
+        product.setProductSingleImages(pisSingle);
+        //详情（类）图片
+        List<ProductImage> pisDetail = productImageService.list(pid, "type_detail");
+        product.setProductDetailImages(pisDetail);
+
+        //产品评价
+
+
+        model.addAttribute("cs",cs);
+        model.addAttribute("p", product);
+        return "fore/product";
+    }
+
 
 }

@@ -44,6 +44,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.selectByPrimaryKey(id);
         //设置 Category 属性
         setCategory(product);
+        //设置封面图片 firstProductImage 属性
+        setFirstProductImage(product);
         return product;
     }
 
