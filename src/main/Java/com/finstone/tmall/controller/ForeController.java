@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -67,9 +69,11 @@ public class ForeController {
 
     //登录
     @RequestMapping("forelogin")
-    public String login(Model model,
+    public String login(Model model, HttpSession session,
                         @RequestParam("name") String name,
                         @RequestParam("password") String password){
+        //特殊字符转义
+        name = HtmlUtils.htmlEscape(name);
         //校验账号
         User user = userService.get(name,password);
         if(user == null){
@@ -78,6 +82,10 @@ public class ForeController {
             return "fore/login";
         }
         model.addAttribute("user",user);
+        //添加session
+        session.setAttribute("user", user);
+
+
         //查询购物车
         //查询订单
         return "redirect:forehome";
