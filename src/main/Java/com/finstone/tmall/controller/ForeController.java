@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -63,6 +64,25 @@ public class ForeController {
     public String loginPage(){
         return "fore/login";
     }
+
+    //登录
+    @RequestMapping("forelogin")
+    public String login(Model model,
+                        @RequestParam("name") String name,
+                        @RequestParam("password") String password){
+        //校验账号
+        User user = userService.get(name,password);
+        if(user == null){
+            model.addAttribute("msg","账号密码错误");
+            model.addAttribute("user",null);
+            return "fore/login";
+        }
+        model.addAttribute("user",user);
+        //查询购物车
+        //查询订单
+        return "redirect:forehome";
+    }
+
 
     //注册页
     @RequestMapping("registerPage")

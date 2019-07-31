@@ -18,4 +18,7 @@ public interface UserService {
 
     //判断用户名是否被占用
     boolean isExist(String name);
+
+    //检验账号密码
+    User get(String name, String password);
 }
