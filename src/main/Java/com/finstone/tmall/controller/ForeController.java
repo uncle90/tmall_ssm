@@ -101,6 +101,9 @@ public class ForeController {
     //注册
     @RequestMapping("foreregister")
     public String foreregister(Model model, User user){
+        //特殊字符转义
+        String name = HtmlUtils.htmlEscape(user.getName());
+        user.setName(name);
         //User接收form表单带name的提交
         if(userService.isExist(user.getName())){
             model.addAttribute("msg","用户名已经被使用,不能使用");
