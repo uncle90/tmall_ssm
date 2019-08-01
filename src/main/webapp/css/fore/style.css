@@ -26,6 +26,11 @@ nav.top {
 	border-bottom-color: #e7e7e7;
 }
 
+nav.top div.top_middle{
+	width: 1024px;
+	margin: 0px auto;
+}
+
 .redColor {
 	color: #C40000;
 }
@@ -49,6 +54,8 @@ nav.top a:hover {
 
 nav.top {
 	background-color: #f2f2f2;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 nav.top div.row div {
@@ -59,6 +66,12 @@ nav.top div.row div {
 	background-color: lightgray;
 	border: 1px solid gray;
 	text-align: center;
+}
+
+div.searchOutDiv, div.simpleSearchOutDiv{
+	width: 1024px;
+	margin: 0px auto;
+	position: relative;
 }
 
 div.searchDiv {
@@ -245,8 +258,8 @@ img.catear {
 
 img.logo {
 	position: absolute;
-	left: 0px;
-	top: 30px;
+	left: -40px;
+	top: -50px;
 /* 	z-index:-1; */
 }
 

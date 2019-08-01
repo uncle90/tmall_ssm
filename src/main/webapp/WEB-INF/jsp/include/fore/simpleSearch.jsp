@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8" isELIgnored="false"%>
 
-<div >
+<div class="simpleSearchOutDiv">
 	<a href="${contextPath}">
 		<img id="simpleLogo" class="simpleLogo" src="img/site/simpleLogo.png">
 	</a>
