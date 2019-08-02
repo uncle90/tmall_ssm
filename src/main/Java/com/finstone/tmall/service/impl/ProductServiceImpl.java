@@ -5,9 +5,7 @@ import com.finstone.tmall.entity.Product;
 import com.finstone.tmall.entity.ProductExample;
 import com.finstone.tmall.entity.ProductImage;
 import com.finstone.tmall.mapper.ProductMapper;
-import com.finstone.tmall.service.CategoryService;
-import com.finstone.tmall.service.ProductImageService;
-import com.finstone.tmall.service.ProductService;
+import com.finstone.tmall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +21,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductImageService productImageService;
+
+    @Autowired
+    ReviewService reviewService;
+
+    @Autowired
+    OrderItemService orderItemService;
 
     @Override
     public void add(Product product) {
@@ -100,6 +104,19 @@ public class ProductServiceImpl implements ProductService {
     public void setFirstProductImage(List<Product> ps) {
         for(Product p: ps){
             this.setFirstProductImage(p);
+        }
+    }
+
+    @Override
+    public void setSaleCountAndReviewCount(Product product) {
+        product.setReviewCount(reviewService.getCount(product.getId()));
+        product.setSaleCount(orderItemService.getSaleCount(product.getId()));
+    }
+
+    @Override
+    public void setSaleCountAndReviewCount(List<Product> ps) {
+        for(Product product: ps){
+            this.setFirstProductImage(product);
         }
     }
 }

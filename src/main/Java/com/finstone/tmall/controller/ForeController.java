@@ -31,6 +31,9 @@ public class ForeController {
     @Autowired
     PropertyValueService propertyValueService;
 
+    @Autowired
+    ReviewService reviewService;
+
     /**
      * 首页
      * 1. 在横向导航栏上提供4个分类连接
@@ -150,26 +153,30 @@ public class ForeController {
      */
     @RequestMapping("foreproduct")
     public String product(@RequestParam("pid") int pid, Model model){
-        //分类list
+        //分类
         List<Category> cs = categoryService.list();
 
-        //产品
+        //产品&图片信息
         Product product = productService.get(pid);
-        //单个（类）图片
-        List<ProductImage> pisSingle = productImageService.list(pid, ProductImageService.type_single);
+        List<ProductImage> pisSingle = productImageService.list(pid, ProductImageService.type_single); //单个（类）图片
         product.setProductSingleImages(pisSingle);
-        //详情（类）图片
-        List<ProductImage> pisDetail = productImageService.list(pid, ProductImageService.type_detail);
+        List<ProductImage> pisDetail = productImageService.list(pid, ProductImageService.type_detail); //详情（类）图片
         product.setProductDetailImages(pisDetail);
 
         //商品详情（产品属性）
         List<PropertyValue> pvs = propertyValueService.list(pid);
 
-        //TODO 产品评价
+        //产品评价
+        List<Review> reviews = reviewService.list(pid);
+
+        //销量和累计评价
+        //TODO 商品评价列表中的用户匿名处理
+        productService.setSaleCountAndReviewCount(product);
 
         model.addAttribute("cs",cs);
         model.addAttribute("p", product);
         model.addAttribute("pvs",pvs);
+        model.addAttribute("reviews",reviews);
         return "fore/product";
     }
 

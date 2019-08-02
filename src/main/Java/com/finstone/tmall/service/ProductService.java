@@ -21,4 +21,10 @@ public interface ProductService {
     void setFirstProductImage(Product product);
 
     void setFirstProductImage(List<Product> ps);
+
+    //产品销量和累计评价数
+    void setSaleCountAndReviewCount(Product product);
+
+    //产品销量和累计评价数
+    void setSaleCountAndReviewCount(List<Product> ps);
 }

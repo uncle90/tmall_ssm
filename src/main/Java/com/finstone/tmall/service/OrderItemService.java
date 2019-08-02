@@ -24,4 +24,7 @@ public interface OrderItemService {
     //设置订单项对应的商品
     void setProduct(OrderItem orderItem);
 
+    //合计指定产品的销量
+    int getSaleCount(int pid);
+
 }
