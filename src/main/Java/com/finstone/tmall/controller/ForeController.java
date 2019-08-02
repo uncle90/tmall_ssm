@@ -156,10 +156,10 @@ public class ForeController {
         //产品
         Product product = productService.get(pid);
         //单个（类）图片
-        List<ProductImage> pisSingle = productImageService.list(pid, "type_single");
+        List<ProductImage> pisSingle = productImageService.list(pid, ProductImageService.type_single);
         product.setProductSingleImages(pisSingle);
         //详情（类）图片
-        List<ProductImage> pisDetail = productImageService.list(pid, "type_detail");
+        List<ProductImage> pisDetail = productImageService.list(pid, ProductImageService.type_detail);
         product.setProductDetailImages(pisDetail);
 
         //商品详情（产品属性）
