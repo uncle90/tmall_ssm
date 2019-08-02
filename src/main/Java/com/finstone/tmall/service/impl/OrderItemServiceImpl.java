@@ -51,7 +51,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         OrderItemExample example = new OrderItemExample();
         example.createCriteria().andOidEqualTo(order.getId());//订单编号
         example.setOrderByClause("id desc");
-        List<OrderItem> ois = orderItemMapper.selectByExample(example);;
+        List<OrderItem> ois = orderItemMapper.selectByExample(example);
         order.setOrderItems(ois);
 
         //订单中的商品数量
