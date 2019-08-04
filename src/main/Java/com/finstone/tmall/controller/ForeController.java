@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
@@ -146,6 +147,25 @@ public class ForeController {
     }
 
     /**
+     * 模态登录
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping("forecheckLogin")
+    @ResponseBody
+    public String forecheckLogin(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            model.addAttribute("msg","账号密码错误");
+            model.addAttribute("user",null);
+            return "fail";
+        }else{
+            return "success";
+        }
+    }
+
+    /**
      * 产品页
      * @param pid
      * @param model
@@ -179,6 +199,5 @@ public class ForeController {
         model.addAttribute("reviews",reviews);
         return "fore/product";
     }
-
 
 }
