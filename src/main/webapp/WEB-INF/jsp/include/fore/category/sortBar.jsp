@@ -5,37 +5,59 @@
 <script>
 $(function(){
 	$("input.sortBarPrice").keyup(function(){
-		var num= $(this).val();
-		if(num.length==0){
-			$("div.productUnit").show();
-			return;
-		}
-			
-		num = parseInt(num);
-		if(isNaN(num))
-			num= 1;
-		if(num<=0)
-			num = 1;
-		$(this).val(num);		
-		
-		
+	    //清楚特殊字符
+        $(this).val(this.value.replace(/\D/g,'').replace(/....(?!$)/g,'$&'));
+
 		var begin = $("input.beginPrice").val();
 		var end = $("input.endPrice").val();
-		if(!isNaN(begin) && !isNaN(end)){
-			console.log(begin);
-			console.log(end);
-			$("div.productUnit").hide();
-			$("div.productUnit").each(function(){
-				var price = $(this).attr("price");
-				price = new Number(price);
-				
-				if(price<=end && price>=begin)
-					$(this).show();
-			});
-		}
-		
+
+		if(isNumber(begin) && isNumber(end)){
+            $("div.productUnit").hide();
+            $("div.productUnit").each(function(){
+                var price = $(this).attr("price");
+                price = new Number(price);
+                if(price>=begin && price<=end){
+                    $(this).show();
+				}
+            });
+		}else if(isNumber(begin) && !isNumber(end)){
+            $("div.productUnit").hide();
+            $("div.productUnit").each(function(){
+                var price = $(this).attr("price");
+                price = new Number(price);
+                if(price>=begin){
+                    $(this).show();
+                }
+            });
+        }else if(isNumber(end) && !isNumber(begin)){
+            $("div.productUnit").hide();
+            $("div.productUnit").each(function(){
+                var price = $(this).attr("price");
+                price = new Number(price);
+                if(price<=end){
+                    $(this).show();
+                }
+            });
+		}else{
+            $("div.productUnit").show;
+        }
 	});
 });
+
+/**
+ * 是否为非空数字
+ * @param val
+ */
+function isNumber(val){
+    if(val == "" || val == null){
+        return false;
+	}
+	if(!isNaN(val)){
+	    return true;
+	}else{
+        return false;
+	}
+}
 </script>	
 <div class="categorySortBar">
 
@@ -54,9 +76,9 @@ $(function(){
 	
 	<table class="categorySortBarTable">
 		<tr>
-			<td><input class="sortBarPrice beginPrice" type="text" placeholder="请输入"></td>
+			<td><input class="sortBarPrice beginPrice" type="number" placeholder="请输入"></td>
 			<td class="grayColumn priceMiddleColumn">-</td>
-			<td><input class="sortBarPrice endPrice" type="text" placeholder="请输入"></td>
+			<td><input class="sortBarPrice endPrice" type="number" placeholder="请输入"></td>
 		</tr>
 	</table>
 

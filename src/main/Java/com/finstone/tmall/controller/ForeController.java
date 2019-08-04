@@ -166,7 +166,7 @@ public class ForeController {
     }
 
     /**
-     * 产品页
+`     * 前台产品页
      * @param pid
      * @param model
      * @return
@@ -198,6 +198,27 @@ public class ForeController {
         model.addAttribute("pvs",pvs);
         model.addAttribute("reviews",reviews);
         return "fore/product";
+    }
+
+    /**
+     * 前台分类页
+     * @param cid
+     * @param model
+     * @return
+     */
+    @RequestMapping("forecategory")
+    public String forecategory(@RequestParam("cid") int cid, Model model){
+        //分类
+        List<Category> cs = categoryService.list();
+        //排序栏
+
+        //查询分类&分类下的产品
+        Category category = categoryService.get(cid);
+        categoryService.fill(category);
+
+        model.addAttribute("cs",cs);
+        model.addAttribute("c",category);
+        return "fore/category";
     }
 
 }
