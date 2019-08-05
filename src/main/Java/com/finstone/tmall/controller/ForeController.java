@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -207,14 +209,59 @@ public class ForeController {
      * @return
      */
     @RequestMapping("forecategory")
-    public String forecategory(@RequestParam("cid") int cid, Model model){
-        //分类
-        List<Category> cs = categoryService.list();
-        //排序栏
+    public String forecategory(@RequestParam("cid") int cid,
+                               @RequestParam("sort") String sort,
+                               Model model){
+        List<Category> cs = categoryService.list();   //搜索框下的分类
+        Category category = categoryService.get(cid); //当前分类
+        categoryService.fill(category);               //当前分类下的产品
+        productService.setSaleCountAndReviewCount(category.getProducts()); //产品销量&评价数量 for 排序
+        //产品排序
+        switch (sort){
+            case "all": //热门（销量*评论数）
+                Collections.sort(category.getProducts(), new Comparator<Product>() {
+                    @Override
+                    public int compare(Product o1, Product o2) {
+                        return o2.getSaleCount()*o2.getReviewCount() - o1.getSaleCount()*o1.getReviewCount();
+                    }
+                });
+                break;
+            case "review": //评价数多
+                Collections.sort(category.getProducts(), new Comparator<Product>() {
+                    @Override
+                    public int compare(Product o1, Product o2) {
+                        return o2.getReviewCount() - o1.getReviewCount();
+                    }
+                });
+                break;
+            case "date": //创建日期近
+                Collections.sort(category.getProducts(), new Comparator<Product>() {
+                    @Override
+                    public int compare(Product o1, Product o2) {
+                        return o2.getCreateDate().compareTo(o1.getCreateDate());
+                    }
+                });
+                break;
+            case "saleCount"://销量多
+                Collections.sort(category.getProducts(), new Comparator<Product>() {
+                    @Override
+                    public int compare(Product o1, Product o2) {
+                        return o2.getSaleCount() - o1.getSaleCount();
+                    }
+                });
+                break;
+            case "price"://价格低
+                Collections.sort(category.getProducts(), new Comparator<Product>() {
+                    @Override
+                    public int compare(Product o1, Product o2) {
+                        return (int) (o1.getPromotePrice() - o2.getPromotePrice());
+                    }
+                });
+                break;
+        }
 
-        //查询分类&分类下的产品
-        Category category = categoryService.get(cid);
-        categoryService.fill(category);
+
+
 
         model.addAttribute("cs",cs);
         model.addAttribute("c",category);
