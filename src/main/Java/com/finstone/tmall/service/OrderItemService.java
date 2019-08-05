@@ -15,6 +15,9 @@ public interface OrderItemService {
 
     List<OrderItem> list();
 
+    //查询用户购物车中的商品（未提交到订单）
+    List<OrderItem> listByUser(int uid);
+
     //设置Order.OrderItem属性
     void fill(List<Order> orders);
 

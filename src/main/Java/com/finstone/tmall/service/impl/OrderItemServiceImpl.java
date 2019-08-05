@@ -23,6 +23,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void add(OrderItem order) {
+        orderItemMapper.insert(order);
     }
 
     @Override
@@ -36,6 +37,15 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> list() {
         return null;
+    }
+
+    @Override
+    public List<OrderItem> listByUser(int uid) {
+        OrderItemExample example = new OrderItemExample();
+        example.createCriteria().andUidEqualTo(uid).andOidIsNull();
+        example.setOrderByClause("id desc");
+        List<OrderItem> ois = orderItemMapper.selectByExample(example);
+        return ois;
     }
 
     @Override

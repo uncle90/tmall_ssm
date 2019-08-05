@@ -6,6 +6,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
+    public Order() {}
+
+    //新建订单
+    public Order(String orderCode, Date createDate, Integer uid, String status) {
+        this.orderCode = orderCode;
+        this.createDate = createDate;
+        this.uid = uid;
+        this.status = status;
+    }
+
     private Integer id;
 
     private String orderCode;

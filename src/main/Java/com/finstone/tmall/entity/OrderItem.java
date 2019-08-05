@@ -1,6 +1,15 @@
 package com.finstone.tmall.entity;
 
 public class OrderItem {
+    public OrderItem() {}
+
+    //添加订单项。id自动生成，oid生成订单补充，Product非数据库字段。
+    public OrderItem(Integer pid, Integer uid, Integer number) {
+        this.pid = pid;
+        this.uid = uid;
+        this.number = number;
+    }
+
     private Integer id;
 
     private Integer pid;
