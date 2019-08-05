@@ -2,6 +2,7 @@ package com.finstone.tmall.controller;
 
 import com.finstone.tmall.entity.*;
 import com.finstone.tmall.service.*;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -264,6 +265,18 @@ public class ForeController {
         model.addAttribute("cs",cs);
         model.addAttribute("c",category);
         return "fore/category";
+    }
+
+    /**
+     * 商品搜索
+     * @return
+     */
+    @RequestMapping("foresearch")
+    public String search(String keyword, Model model){
+        PageHelper.offsetPage(0,20); //取前20条记录
+        List<Product> ps = productService.search(keyword);
+        model.addAttribute("ps",ps);
+        return "fore/searchResult";
     }
 
 }

@@ -120,4 +120,17 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public List<Product> search(String keyword) {
+        //查询list
+        ProductExample example = new ProductExample();
+        example.createCriteria().andNameLike("%"+keyword+"%");
+        example.setOrderByClause("id desc");
+        List<Product> ps = productMapper.selectByExample(example);
+        //设置封面图片 firstProductImage 属性
+        setFirstProductImage(ps);
+        //产品销量&评价数量
+        this.setSaleCountAndReviewCount(ps);
+        return ps;
+    }
 }

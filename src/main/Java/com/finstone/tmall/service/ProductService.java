@@ -27,4 +27,7 @@ public interface ProductService {
 
     //产品销量和累计评价数
     void setSaleCountAndReviewCount(List<Product> ps);
+
+    //产品搜索，根据名称模糊查询
+    List<Product> search(String keyword);
 }
