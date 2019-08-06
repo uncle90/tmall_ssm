@@ -1,8 +1,10 @@
 package com.finstone.tmall.controller;
 
+import com.finstone.tmall.entity.Order;
 import com.finstone.tmall.entity.OrderItem;
 import com.finstone.tmall.entity.User;
 import com.finstone.tmall.service.OrderItemService;
+import com.finstone.tmall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class ShoppingController {
 
     @Autowired
     OrderItemService orderItemService;
+
+    @Autowired
+    OrderService orderService;
 
     /**
      * 立即购买某种商品。如果购物车有同类商品，则追加数量，合并购买。
@@ -183,6 +188,22 @@ public class ShoppingController {
             orderItemService.update(orderItem); //修改商品数量
         }
         return "success";
+    }
+
+    /**
+     * 查看订单
+     * @return
+     */
+    @RequestMapping("forebought")
+    public String forebought(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        //历史订单
+        List<Order> os = orderService.listByUser(user.getId());
+        model.addAttribute("os",os);
+        return "fore/bought";
     }
 
 }

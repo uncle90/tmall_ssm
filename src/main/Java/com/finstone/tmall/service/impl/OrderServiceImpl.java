@@ -44,4 +44,13 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
+    @Override
+    public List<Order> listByUser(int uid) {
+        OrderExample example = new OrderExample();
+        example.createCriteria().andUidEqualTo(uid);
+        example.setOrderByClause("id desc");
+        List<Order> orders = orderMapper.selectByExample(example);
+        orderItemService.fill(orders);
+        return orders;
+    }
 }

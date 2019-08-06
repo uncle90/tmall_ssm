@@ -23,4 +23,7 @@ public interface OrderService {
     //列出所有订单，以及订单项
     List<Order> list();
 
+    //列出用户的所有订单，以及订单项
+    List<Order> listByUser(int uid);
+
 }
