@@ -32,6 +32,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void update(OrderItem orderItem) {
+        orderItemMapper.updateByPrimaryKeySelective(orderItem);
     }
 
     @Override
