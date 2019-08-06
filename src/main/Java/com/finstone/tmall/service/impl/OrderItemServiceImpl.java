@@ -95,6 +95,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    public void setProduct(List<OrderItem> ois) {
+        for (OrderItem orderItem: ois){
+            this.setProduct(orderItem);
+        }
+    }
+
+    @Override
     public int getSaleCount(int pid) {
         int saleCount = 0;
         OrderItemExample example = new OrderItemExample();

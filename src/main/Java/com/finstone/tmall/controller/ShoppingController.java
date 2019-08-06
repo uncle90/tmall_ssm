@@ -64,7 +64,6 @@ public class ShoppingController {
         return "redirect:forebuy?oiid="+orderItem.getId();
     }
 
-
     /**
      * 把某种商品加入购物车。如果购物车有同类商品，则追加数量。与 forebuyone 类似。
      * @return
@@ -99,7 +98,6 @@ public class ShoppingController {
         return "success";
     }
 
-
     /**
      * 结算（订单提交）页面
      * @param model
@@ -121,6 +119,22 @@ public class ShoppingController {
         model.addAttribute("total",total);
         session.setAttribute("ois",ois);//把订单项放入回话，给其他页面使用
         return "fore/buy";
+    }
+
+    /**
+     * 查看购物车。已加入购物车的商品从session中获取。
+     * @return
+     */
+    @RequestMapping("forecart")
+    public String forecart(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        List<OrderItem> ois = orderItemService.listByUser(user.getId());
+        orderItemService.setProduct(ois);
+        model.addAttribute("ois", ois);
+        return "fore/cart";
     }
 
 }
