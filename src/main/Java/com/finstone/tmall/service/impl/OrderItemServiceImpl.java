@@ -36,6 +36,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    public OrderItem get(int id) {
+        return orderItemMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<OrderItem> list() {
         return null;
     }

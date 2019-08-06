@@ -13,6 +13,8 @@ public interface OrderItemService {
 
     void update(OrderItem orderItem);
 
+    OrderItem get(int id);
+
     List<OrderItem> list();
 
     //查询用户购物车中的商品（未提交到订单）
