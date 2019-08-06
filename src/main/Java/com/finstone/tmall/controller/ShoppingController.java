@@ -60,7 +60,7 @@ public class ShoppingController {
         //设置订单项对应的商品
         orderItemService.setProduct(orderItem);
 
-        return "redirect:forebuy?oiid="+orderItem.getOid();
+        return "redirect:forebuy?oiid="+orderItem.getId();
     }
 
 
