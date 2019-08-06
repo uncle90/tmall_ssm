@@ -137,4 +137,52 @@ public class ShoppingController {
         return "fore/cart";
     }
 
+    /**
+     * 从购物车删除
+     * @return
+     */
+    @RequestMapping("foredeleteOrderItem")
+    @ResponseBody
+    public String foredeleteOrderItem(HttpSession session, int oiid){
+        //检查会话，是否已登录
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "fail";
+        }
+        orderItemService.delete(oiid);
+        return "success";
+    }
+
+    /**
+     * 修改购物车中的商品数量为 num
+     * @return
+     */
+    @RequestMapping("forechangeOrderItem")
+    @ResponseBody
+    public String forechangeOrderItem(int pid, int number, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        //检查购物车是否有同类商品
+        boolean exist = false;
+        OrderItem orderItem = null;
+        List<OrderItem> ois = orderItemService.listByUser(user.getId());
+        if(ois!=null && !ois.isEmpty()){
+            for(OrderItem oi: ois){
+                if(oi.getPid()==pid){//自动拆箱
+                    orderItem = oi;
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        //修改订单项
+        if(exist){
+            orderItem.setNumber(number);
+            orderItemService.update(orderItem); //修改商品数量
+        }
+        return "success";
+    }
+
 }

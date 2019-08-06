@@ -6,7 +6,6 @@
 var deleteOrderItem = false;
 var deleteOrderItemid = 0;
 $(function(){
-
 	$("a.deleteOrderItem").click(function(){
 		deleteOrderItem = false;
 		var oiid = $(this).attr("oiid")
@@ -17,30 +16,37 @@ $(function(){
 		deleteOrderItem = true;
 		$("#deleteConfirmModal").modal('hide');
 	});
-	
+
+    /**
+	 * 模态框删除某件商品
+	 * hidden.bs.modal, 模态框关闭事件
+	 *  shown.bs.modal, 模态框出现事件
+     */
 	$('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
 		if(deleteOrderItem){
 			var page="foredeleteOrderItem";
 			$.post(
-				    page,
-				    {"oiid":deleteOrderItemid},
-				    function(result){
-						if("success"==result){
-							$("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
-						}
-						else{
-							location.href="loginPage";
-						}
-				    }
-				);
-			
+                page,
+                {"oiid":deleteOrderItemid},
+                function(result){
+                    if("success"==result){
+                        $("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
+                    }
+                    else{
+                        location.href="loginPage";
+                    }
+                }
+			);
 		}
-	})	
-	
+	})
+
+    /**
+	 * 勾选/不选某种商品
+     */
 	$("img.cartProductItemIfSelected").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
-			$(this).attr("src","img/site/cartNotSelected.png");
+			$(this).attr("src","/img/site/cartNotSelected.png");
 			$(this).attr("selectit","false")
 			$(this).parents("tr.cartProductItemTR").css("background-color","#fff");
 		}
@@ -53,6 +59,10 @@ $(function(){
 		syncCreateOrderButton();
 		calcCartSumPriceAndNumber();
 	});
+
+    /**
+	 * 全选、全不选购物车中的商品
+     */
 	$("img.selectAllItem").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
@@ -75,15 +85,15 @@ $(function(){
 		}
 		syncCreateOrderButton();
 		calcCartSumPriceAndNumber();
-		
-
 	});
-	
+
+    /**
+	 * 修改（输入）商品数量
+     */
 	$(".orderItemNumberSetting").keyup(function(){
 		var pid=$(this).attr("pid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
-		
 		var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
 		num = parseInt(num);
 		if(isNaN(num))
@@ -92,34 +102,40 @@ $(function(){
 			num = 1;
 		if(num>stock)
 			num = stock;
-		
 		syncPrice(pid,num,price);
 	});
 
+    /**
+	 * 商品数量加一
+     */
 	$(".numberPlus").click(function(){
-		
 		var pid=$(this).attr("pid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
 		var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
-
 		num++;
 		if(num>stock)
 			num = stock;
 		syncPrice(pid,num,price);
 	});
+
+    /**
+	 * 商品数量减一
+     */
 	$(".numberMinus").click(function(){
 		var pid=$(this).attr("pid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
-		
 		var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
 		--num;
 		if(num<=0)
 			num=1;
 		syncPrice(pid,num,price);
-	});	
-	
+	});
+
+    /**
+	 * 提交订单
+     */
 	$("button.createOrderButton").click(function(){
 		var params = "";
 		$(".cartProductItemIfSelected").each(function(){
@@ -131,9 +147,6 @@ $(function(){
 		params = params.substring(1);
 		location.href="forebuy?"+params;
 	});
-	
-	
-	
 })
 
 function syncCreateOrderButton(){
@@ -143,7 +156,6 @@ function syncCreateOrderButton(){
 			selectAny = true;
 		}
 	});
-	
 	if(selectAny){
 		$("button.createOrderButton").css("background-color","#C40000");
 		$("button.createOrderButton").removeAttr("disabled");
@@ -152,8 +164,8 @@ function syncCreateOrderButton(){
 		$("button.createOrderButton").css("background-color","#AAAAAA");
 		$("button.createOrderButton").attr("disabled","disabled");		
 	}
-		
 }
+
 function syncSelect(){
 	var selectAll = true;
 	$(".cartProductItemIfSelected").each(function(){
@@ -161,15 +173,12 @@ function syncSelect(){
 			selectAll = false;
 		}
 	});
-	
 	if(selectAll)
 		$("img.selectAllItem").attr("src","img/site/cartSelected.png");
 	else
 		$("img.selectAllItem").attr("src","img/site/cartNotSelected.png");
-	
-	
-	
 }
+
 function calcCartSumPriceAndNumber(){
 	var sum = 0;
 	var totalNumber = 0;
@@ -178,34 +187,30 @@ function calcCartSumPriceAndNumber(){
 		var price =$(".cartProductItemSmallSumPrice[oiid="+oiid+"]").text();
 		price = price.replace(/,/g, "");
 		price = price.replace(/￥/g, "");
-		sum += new Number(price);	
-		
+		sum += new Number(price);
 		var num =$(".orderItemNumberSetting[oiid="+oiid+"]").val();
-		totalNumber += new Number(num);	
-		
+		totalNumber += new Number(num);
 	});
-	
 	$("span.cartSumPrice").html("￥"+formatMoney(sum));
 	$("span.cartTitlePrice").html("￥"+formatMoney(sum));
 	$("span.cartSumNumber").html(totalNumber);
 }
+
 function syncPrice(pid,num,price){
 	$(".orderItemNumberSetting[pid="+pid+"]").val(num);
 	var cartProductItemSmallSumPrice = formatMoney(num*price); 
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber();
-	
 	var page = "forechangeOrderItem";
 	$.post(
-		    page,
-		    {"pid":pid,"number":num},
-		    function(result){
-				if("success"!=result){
-					location.href="loginPage";
-				}
-		    }
-		);
-
+        page,
+        {"pid":pid,"number":num},
+        function(result){
+            if("success"!=result){
+                location.href="loginPage";
+            }
+        }
+	);
 }
 </script>	
 
@@ -271,7 +276,7 @@ function syncPrice(pid,num,price){
 						 </td>
 						<td >
 							<span class="cartProductItemSmallSumPrice" oiid="${oi.id}" pid="${oi.product.id}" >
-							￥<fmt:formatNumber type="number" value="${oi.product.promotePrice*oi.number}" minFractionDigits="2"/>
+							￥<fmt:formatNumber type="number" value="${oi.product.promotePrice*oi.number}" maxFractionDigits="2"/>
 							</span>
 						
 						</td>

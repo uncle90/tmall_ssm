@@ -28,6 +28,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void delete(int id) {
+        orderItemMapper.deleteByPrimaryKey(id);
     }
 
     @Override
