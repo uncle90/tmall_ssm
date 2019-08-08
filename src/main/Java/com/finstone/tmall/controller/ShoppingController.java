@@ -104,29 +104,6 @@ public class ShoppingController {
     }
 
     /**
-     * 结算（订单提交）页面
-     * @param model
-     * @param session
-     * @param oiid 多个订单项
-     * @return
-     */
-    @RequestMapping("forebuy")
-    public String forebuy(Model model, HttpSession session, String[] oiid){
-        List<OrderItem> ois = new ArrayList<>();
-        float total = 0;
-        for(String idstr: oiid){
-            int id = Integer.parseInt(idstr);
-            OrderItem orderItem = orderItemService.get(id);//获取订单项
-            orderItemService.setProduct(orderItem);//设置产品属性
-            total += orderItem.getNumber() * orderItem.getProduct().getPromotePrice();//总价
-            ois.add(orderItem);
-        }
-        model.addAttribute("total",total);
-        session.setAttribute("ois",ois);//把订单项放入回话，给其他页面使用
-        return "fore/buy";
-    }
-
-    /**
      * 查看购物车。已加入购物车的商品从session中获取。
      * @return
      */
@@ -204,6 +181,29 @@ public class ShoppingController {
         List<Order> os = orderService.listByUser(user.getId());
         model.addAttribute("os",os);
         return "fore/bought";
+    }
+
+    /**
+     * 结算页面（下单页面）
+     * @param model
+     * @param session
+     * @param oiid 多个订单项
+     * @return
+     */
+    @RequestMapping("forebuy")
+    public String forebuy(Model model, HttpSession session, String[] oiid){
+        List<OrderItem> ois = new ArrayList<>();
+        float total = 0;
+        for(String idstr: oiid){
+            int id = Integer.parseInt(idstr);
+            OrderItem orderItem = orderItemService.get(id);//获取订单项
+            orderItemService.setProduct(orderItem);//设置产品属性
+            total += orderItem.getNumber() * orderItem.getProduct().getPromotePrice();//总价
+            ois.add(orderItem);
+        }
+        model.addAttribute("total",total);
+        session.setAttribute("ois",ois);//把订单项放入回话，给其他页面使用
+        return "fore/buy";
     }
 
 }
