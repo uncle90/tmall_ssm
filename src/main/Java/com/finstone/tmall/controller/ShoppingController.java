@@ -227,7 +227,6 @@ public class ShoppingController {
         //生成订单, 并返回订单总价.
         float total = orderService.add(order,ois);
 
-        model.addAttribute("total",total);
         return "redirect:forealipay?total="+total+"&oid="+order.getId();
     }
 
@@ -236,12 +235,26 @@ public class ShoppingController {
      * @return
      */
     @RequestMapping("forealipay")
-    public String forealipay(){
-        /*
-        param.total
-        param.oid
-         */
+    public String forealipay(Model model, String oid, String total){
+        model.addAttribute("oid",oid);
+        model.addAttribute("total",total);
         return "fore/alipay";
+    }
+
+    /**
+     * 完成支付
+     * @param oid 订单编号
+     * @param total 金额
+     * @return
+     */
+    @RequestMapping("forepayed")
+    public String forepayed(String oid, String total){
+        Order order = orderService.get(Integer.parseInt(oid));
+        //更改订单状态
+        order.setStatus(OrderService.waitDelivery);
+        order.setPayDate(new Date());
+        orderService.update(order);
+        return "fore/payed";
     }
 
 }
