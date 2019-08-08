@@ -1,6 +1,7 @@
 package com.finstone.tmall.service;
 
 import com.finstone.tmall.entity.Order;
+import com.finstone.tmall.entity.OrderItem;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public interface OrderService {
     String finish = "finish";
     String delete = "delete";
 
-    void add(Order order);
+    //创建订单,更新订单项.
+    float add(Order order, List<OrderItem> ois);
 
     void delete(int id);
 

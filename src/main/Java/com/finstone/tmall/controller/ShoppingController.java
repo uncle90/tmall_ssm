@@ -5,6 +5,8 @@ import com.finstone.tmall.entity.OrderItem;
 import com.finstone.tmall.entity.User;
 import com.finstone.tmall.service.OrderItemService;
 import com.finstone.tmall.service.OrderService;
+import com.finstone.tmall.util.DateSyncUtil;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -204,6 +207,41 @@ public class ShoppingController {
         model.addAttribute("total",total);
         session.setAttribute("ois",ois);//把订单项放入回话，给其他页面使用
         return "fore/buy";
+    }
+
+    /**
+     * 提交订单。价格不需要额外保存，在订单项中。
+     * @return
+     */
+    @RequestMapping("forecreateOrder")
+    public String createOrder(Model model, HttpSession session, Order order){
+        //用户&订单项
+        User user = (User) session.getAttribute("user");
+        List<OrderItem> ois = (List<OrderItem>) session.getAttribute("ois");
+        //订单字段
+        Date date = new Date();
+        order.setOrderCode(DateSyncUtil.format(date)+ RandomUtils.nextInt(0,10000));//时间戳
+        order.setCreateDate(date);
+        order.setUid(user.getId());
+        order.setStatus(OrderService.waitPay);
+        //生成订单, 并返回订单总价.
+        float total = orderService.add(order,ois);
+
+        model.addAttribute("total",total);
+        return "redirect:forealipay?total="+total+"&oid="+order.getId();
+    }
+
+    /**
+     * 支付页
+     * @return
+     */
+    @RequestMapping("forealipay")
+    public String forealipay(){
+        /*
+        param.total
+        param.oid
+         */
+        return "fore/alipay";
     }
 
 }
