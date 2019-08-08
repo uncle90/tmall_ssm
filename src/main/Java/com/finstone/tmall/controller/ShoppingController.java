@@ -257,4 +257,21 @@ public class ShoppingController {
         return "fore/payed";
     }
 
+    /**
+     * 删除订单。假删除，修改状态，不删除数据。
+     * @return
+     */
+    @RequestMapping("foredeleteOrder")
+    @ResponseBody
+    public String foredeleteOrder(HttpSession session, int oid){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "fail";
+        }
+        Order order = orderService.get(oid);
+        order.setStatus(OrderService.delete);
+        orderService.update(order);
+        return "success";
+    }
+
 }

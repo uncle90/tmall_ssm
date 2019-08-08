@@ -157,8 +157,7 @@ $(function(){
 								</c:if>
 								
 								<c:if test="${o.status=='waitDelivery' }">
-									<span>待发货</span>
-<%-- 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button> --%>
+ 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button>
 									
 								</c:if>
 

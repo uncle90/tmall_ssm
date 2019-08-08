@@ -54,6 +54,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void update(Order order) {
+        orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public Order get(int id) {
+        return orderMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -68,10 +74,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> listByUser(int uid) {
         OrderExample example = new OrderExample();
-        example.createCriteria().andUidEqualTo(uid);
+        example.createCriteria().andUidEqualTo(uid).andStatusNotEqualTo(OrderService.delete);
         example.setOrderByClause("id desc");
         List<Order> orders = orderMapper.selectByExample(example);
         orderItemService.fill(orders);
         return orders;
     }
+
 }
