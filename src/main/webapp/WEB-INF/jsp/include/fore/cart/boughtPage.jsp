@@ -60,7 +60,8 @@ $(function(){
 		$.ajax({
 			   url: page,
 			   success: function(result){
-				alert("卖家已秒发，刷新当前页面，即可进行确认收货")
+			       alert("卖家已秒发，刷新当前页面，即可进行确认收货");
+			       location.reload();
 			   }
 			});
 		
