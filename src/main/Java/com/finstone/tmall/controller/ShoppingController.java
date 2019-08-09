@@ -236,6 +236,11 @@ public class ShoppingController {
      */
     @RequestMapping("forealipay")
     public String forealipay(Model model, String oid, String total){
+        Order order = orderService.get(Integer.parseInt(oid));
+        //已付款，前往订单页查看
+        if(order.getPayDate() != null){
+            return "fore/payed";
+        }
         model.addAttribute("oid",oid);
         model.addAttribute("total",total);
         return "fore/alipay";
