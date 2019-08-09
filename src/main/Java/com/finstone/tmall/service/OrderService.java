@@ -8,12 +8,12 @@ import java.util.List;
 public interface OrderService {
 
     //订单状态常量
-    String waitPay = "waitPay";
-    String waitDelivery = "waitDelivery";
-    String waitConfirm = "waitConfirm";
-    String waitReview = "waitReview";
-    String finish = "finish";
-    String delete = "delete";
+    String waitPay = "waitPay";            //待支付
+    String waitDelivery = "waitDelivery"; //待发货
+    String waitConfirm = "waitConfirm";   //待确认收货
+    String waitReview = "waitReview";     //待评价
+    String finish = "finish";              //订单结束
+    String delete = "delete";              //订单删除
 
     //创建订单,更新订单项.
     float add(Order order, List<OrderItem> ois);

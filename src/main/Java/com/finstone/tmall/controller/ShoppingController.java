@@ -1,8 +1,10 @@
 package com.finstone.tmall.controller;
 
+import com.finstone.tmall.entity.Category;
 import com.finstone.tmall.entity.Order;
 import com.finstone.tmall.entity.OrderItem;
 import com.finstone.tmall.entity.User;
+import com.finstone.tmall.service.CategoryService;
 import com.finstone.tmall.service.OrderItemService;
 import com.finstone.tmall.service.OrderService;
 import com.finstone.tmall.util.DateSyncUtil;
@@ -31,6 +33,9 @@ public class ShoppingController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    CategoryService categoryService;
 
     /**
      * 立即购买某种商品。如果购物车有同类商品，则追加数量，合并购买。
@@ -277,6 +282,47 @@ public class ShoppingController {
         order.setStatus(OrderService.delete);
         orderService.update(order);
         return "success";
+    }
+
+    /**
+     * 去确认收货页
+     * @return
+     */
+    @RequestMapping("foreconfirmPay")
+    public String foreconfirmPay(HttpSession session, Model model, int oid){
+        //1. 检查用户
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        //2. 查询所有分类
+        List<Category> cs = categoryService.list();
+        //3. 查询订单 & 订单项
+        Order order = orderService.get(oid);
+        orderItemService.fill(order);
+
+        model.addAttribute("cs",cs);
+        model.addAttribute("o",order);
+        return "fore/confirmPay";
+    }
+
+    /**
+     * 确认收货
+     * @return
+     */
+    @RequestMapping("foreorderConfirmed")
+    public String foreorderConfirmed(HttpSession session, int oid){
+        //1. 检查用户
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        //2.确认收货
+        Order order = orderService.get(oid);
+        order.setStatus(OrderService.waitReview);
+        order.setConfirmDate(new Date());
+        orderService.update(order);
+        return "fore/orderConfirmed";
     }
 
 }

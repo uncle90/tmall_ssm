@@ -33,11 +33,11 @@
 				<tr>
 					<td><img width="50px" src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
 					<td class="confirmPayOrderItemProductLink">
-						<a href="#nowhere">${oi.product.name}</a>
+						<a href="foreproduct?pid=${oi.product.id}">${oi.product.name}</a>
 					</td>
 					<td>￥<fmt:formatNumber type="number" value="${oi.product.originalPrice}" minFractionDigits="2"/></td>
-					<td>1</td>
-					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice}" minFractionDigits="2"/></span></td>
+					<td>${oi.number}</td>
+					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice*oi.number}" minFractionDigits="2"/></span></td>
 					<td><span>快递 ： 0.00 </span></td>
 				</tr>
 			</c:forEach>
