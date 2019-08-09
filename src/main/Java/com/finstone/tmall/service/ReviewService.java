@@ -1,11 +1,13 @@
 package com.finstone.tmall.service;
 
+import com.finstone.tmall.entity.Order;
 import com.finstone.tmall.entity.Review;
 
 import java.util.List;
 
 public interface ReviewService {
-    void add(Review review);
+    //添加商品评价，更改订单状态
+    void add(Review review, int oid);
 
     void delete(int id);
 
@@ -18,4 +20,10 @@ public interface ReviewService {
 
     //合计指定产品的评论数
     int getCount(int pid);
+
+    //设置评论用户
+    void setUser(Review review);
+
+    //设置评论用户
+    void setUser(List<Review> reviews);
 }

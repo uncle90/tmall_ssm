@@ -30,4 +30,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
     }
+
+    /*新增处理方法，提供anonymousName属性*/
+    public String getAnonymousName(){
+        if(null==name){
+            return null;
+        }
+        if(name.length()==1){
+            return "*";
+        }
+        if(name.length()==2){
+            return name.substring(0,1)+"*";//[0,1)
+        }
+        char[] chars = name.toCharArray();
+        for(int i=1; i<chars.length-1; i++){
+            chars[i] = '*'; //1,2,..,n-2
+        }
+        return new String(chars);
+    }
 }

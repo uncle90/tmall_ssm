@@ -1,12 +1,7 @@
 package com.finstone.tmall.controller;
 
-import com.finstone.tmall.entity.Category;
-import com.finstone.tmall.entity.Order;
-import com.finstone.tmall.entity.OrderItem;
-import com.finstone.tmall.entity.User;
-import com.finstone.tmall.service.CategoryService;
-import com.finstone.tmall.service.OrderItemService;
-import com.finstone.tmall.service.OrderService;
+import com.finstone.tmall.entity.*;
+import com.finstone.tmall.service.*;
 import com.finstone.tmall.util.DateSyncUtil;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +31,12 @@ public class ShoppingController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    ReviewService reviewService;
 
     /**
      * 立即购买某种商品。如果购物车有同类商品，则追加数量，合并购买。
@@ -323,6 +324,50 @@ public class ShoppingController {
         order.setConfirmDate(new Date());
         orderService.update(order);
         return "fore/orderConfirmed";
+    }
+
+    /**
+     * 评价购买的商品（订单中的第一种）
+     * @param session
+     * @param oid 订单编号
+     * @param model
+     * @return
+     */
+    @RequestMapping("forereview")
+    public String forereview(HttpSession session, int oid, Model model){
+        Order order = orderService.get(oid);
+        orderItemService.fill(order);
+        Product product = order.getOrderItems().get(0).getProduct();
+        productService.setSaleCountAndReviewCount(product);
+        List<Review> reviews = reviewService.list(product.getId());
+
+        model.addAttribute("o",order);
+        model.addAttribute("p",product);
+        model.addAttribute("reviews",reviews);//评论用户匿名处理
+        return "fore/review";
+    }
+
+    /**
+     * 添加商品评价，更改订单状态
+     * @param session
+     * @param model
+     * @param content 评价内容
+     * @param oid 订单编号
+     * @param pid 商品编号
+     * @return
+     */
+    @RequestMapping("foredoreview")
+    public String foredoreview(HttpSession session, Model model, String content,
+                               @RequestParam("oid") int oid,
+                               @RequestParam("pid") int pid){
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            return "redirect:loginPage";
+        }
+        Review review = new Review(content, user.getId(), pid, new Date());
+        reviewService.add(review, oid);
+
+        return "redirect:forereview?oid="+oid+"&showonly=true";
     }
 
 }

@@ -6,7 +6,7 @@
 		<div class="reviewProductInfoImg"><img width="400px" height="400px" src="img/productSingle/${p.firstProductImage.id}.jpg"></div>
 		<div class="reviewProductInfoRightDiv">
 			<div class="reviewProductInfoRightText">
-				${p.name}
+				<a href="foreproduct?pid=${p.id}">${p.name}</a>
 			</div>
 			<table class="reviewProductInfoTable">
 				<tr>

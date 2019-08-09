@@ -3,6 +3,16 @@ package com.finstone.tmall.entity;
 import java.util.Date;
 
 public class Review {
+
+    public Review() {}
+
+    public Review(String content, Integer uid, Integer pid, Date createDate) {
+        this.content = content;
+        this.uid = uid;
+        this.pid = pid;
+        this.createDate = createDate;
+    }
+
     private Integer id;
 
     private String content;
@@ -12,6 +22,9 @@ public class Review {
     private Integer pid;
 
     private Date createDate;
+
+    /*非数据库字段：关联评价用户*/
+    private User user;
 
     public Integer getId() {
         return id;
@@ -51,5 +64,13 @@ public class Review {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
