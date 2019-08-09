@@ -119,9 +119,9 @@ public class ShoppingController {
     @RequestMapping("forecart")
     public String forecart(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
-        if(user==null){
+        /*if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         List<OrderItem> ois = orderItemService.listByUser(user.getId());
         orderItemService.setProduct(ois);
         model.addAttribute("ois", ois);
@@ -135,11 +135,11 @@ public class ShoppingController {
     @RequestMapping("foredeleteOrderItem")
     @ResponseBody
     public String foredeleteOrderItem(HttpSession session, int oiid){
-        //检查会话，是否已登录
+        /*//检查会话，是否已登录
         User user = (User) session.getAttribute("user");
         if(user == null){
             return "fail";
-        }
+        }*/
         orderItemService.delete(oiid);
         return "success";
     }
@@ -152,9 +152,9 @@ public class ShoppingController {
     @ResponseBody
     public String forechangeOrderItem(int pid, int number, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if(user==null){
+        /*if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         //检查购物车是否有同类商品
         boolean exist = false;
         OrderItem orderItem = null;
@@ -183,9 +183,9 @@ public class ShoppingController {
     @RequestMapping("forebought")
     public String forebought(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
-        if(user==null){
+        /*if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         //历史订单
         List<Order> os = orderService.listByUser(user.getId());
         model.addAttribute("os",os);
@@ -275,10 +275,10 @@ public class ShoppingController {
     @RequestMapping("foredeleteOrder")
     @ResponseBody
     public String foredeleteOrder(HttpSession session, int oid){
-        User user = (User) session.getAttribute("user");
+        /*User user = (User) session.getAttribute("user");
         if(user == null){
             return "fail";
-        }
+        }*/
         Order order = orderService.get(oid);
         order.setStatus(OrderService.delete);
         orderService.update(order);
@@ -291,11 +291,11 @@ public class ShoppingController {
      */
     @RequestMapping("foreconfirmPay")
     public String foreconfirmPay(HttpSession session, Model model, int oid){
-        //1. 检查用户
+        /*//1. 检查用户
         User user = (User) session.getAttribute("user");
         if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         //2. 查询所有分类
         List<Category> cs = categoryService.list();
         //3. 查询订单 & 订单项
@@ -313,11 +313,11 @@ public class ShoppingController {
      */
     @RequestMapping("foreorderConfirmed")
     public String foreorderConfirmed(HttpSession session, int oid){
-        //1. 检查用户
+        /*//1. 检查用户
         User user = (User) session.getAttribute("user");
         if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         //2.确认收货
         Order order = orderService.get(oid);
         order.setStatus(OrderService.waitReview);
@@ -361,9 +361,9 @@ public class ShoppingController {
                                @RequestParam("oid") int oid,
                                @RequestParam("pid") int pid){
         User user = (User) session.getAttribute("user");
-        if(user==null){
+        /*if(user==null){
             return "redirect:loginPage";
-        }
+        }*/
         Review review = new Review(content, user.getId(), pid, new Date());
         reviewService.add(review, oid);
 

@@ -47,4 +47,12 @@
         <!--<property name="resolveLazily" value="true" />-->
     </bean>
 
+    <mvc:interceptors>
+        <!--登录状态拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/fore*"/>
+            <bean class="com.finstone.tmall.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
