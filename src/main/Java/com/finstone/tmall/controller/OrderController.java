@@ -42,6 +42,11 @@ public class OrderController {
     @RequestMapping("admin_order_delivery")
     public String delivery(int id){
         Order order = orderService.get(id);
+        //订单未支付，不能发货
+        if(OrderService.waitPay.equals(order.getStatus())){
+            return "redirect:admin_order_list";
+        }
+        //订单发货
         order.setStatus(OrderService.waitConfirm);
         order.setDeliveryDate(new Date());
         orderService.update(order);
