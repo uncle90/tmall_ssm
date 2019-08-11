@@ -63,8 +63,8 @@ public class ForeController {
      */
     @RequestMapping("foreproduct")
     public String product(@RequestParam("pid") int pid, Model model){
-        //分类
-        List<Category> cs = categoryService.list();
+        /*//分类，放在拦截器中
+        List<Category> cs = categoryService.list();*/
 
         //产品&图片信息
         Product product = productService.get(pid);
@@ -80,10 +80,9 @@ public class ForeController {
         List<Review> reviews = reviewService.list(pid);
 
         //销量和累计评价
-        //TODO 商品评价列表中的用户匿名处理
         productService.setSaleCountAndReviewCount(product);
 
-        model.addAttribute("cs",cs);
+        /*model.addAttribute("cs",cs);*/
         model.addAttribute("p", product);
         model.addAttribute("pvs",pvs);
         model.addAttribute("reviews",reviews);
@@ -99,7 +98,7 @@ public class ForeController {
      */
     @RequestMapping("forecategory")
     public String forecategory(int cid, String sort, Model model){
-        List<Category> cs = categoryService.list();   //搜索框下的分类
+        /*List<Category> cs = categoryService.list();   //搜索框下的分类， 放在拦截器中*/
         Category category = categoryService.get(cid); //当前分类
         categoryService.fill(category);               //当前分类下的产品
         productService.setSaleCountAndReviewCount(category.getProducts()); //产品销量&评价数量 for 排序
@@ -149,7 +148,7 @@ public class ForeController {
             }
         }
 
-        model.addAttribute("cs",cs);
+        /*model.addAttribute("cs",cs);*/
         model.addAttribute("c",category);
         return "fore/category";
     }

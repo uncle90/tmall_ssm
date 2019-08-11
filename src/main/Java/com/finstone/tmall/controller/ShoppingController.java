@@ -296,13 +296,13 @@ public class ShoppingController {
         if(user==null){
             return "redirect:loginPage";
         }*/
-        //2. 查询所有分类
-        List<Category> cs = categoryService.list();
+        /*//2. 查询所有分类，放在拦截器中
+        List<Category> cs = categoryService.list();*/
         //3. 查询订单 & 订单项
         Order order = orderService.get(oid);
         orderItemService.fill(order);
 
-        model.addAttribute("cs",cs);
+        /*model.addAttribute("cs",cs);*/
         model.addAttribute("o",order);
         return "fore/confirmPay";
     }
