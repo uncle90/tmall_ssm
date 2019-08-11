@@ -44,26 +44,26 @@
   </filter-mapping>
 
   <!--配置错误页面-->
-  <!--&lt;!&ndash;未授权&ndash;&gt;
+  <!--未授权-->
   <error-page>
     <error-code>401</error-code>
     <location>/WEB-INF/jsp/error/401.jsp</location>
   </error-page>
-  &lt;!&ndash;禁止访问&ndash;&gt;
+  <!--禁止访问-->
   <error-page>
     <error-code>403</error-code>
     <location>/WEB-INF/jsp/error/403.jsp</location>
   </error-page>
-  &lt;!&ndash;未找到&ndash;&gt;
+  <!--未找到-->
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/error/404.jsp</location>
   </error-page>
-  &lt;!&ndash;系统内部错误&ndash;&gt;
+  <!--系统内部错误-->
   <error-page>
     <error-code>500</error-code>
     <location>/WEB-INF/jsp/error/500.jsp</location>
-  </error-page>-->
+  </error-page>
 
 
 </web-app>
